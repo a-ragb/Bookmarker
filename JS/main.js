@@ -1,103 +1,72 @@
-var bookmarkName = document.querySelector("#bookmarkName");
-var bookmarkUrl = document.querySelector("#bookmarkUrl");
+//* Today
+let todayName = document.getElementById("today-name");
+let monthDay = document.getElementById("month-day");
+let monthName = document.getElementById("month-name");
+let todayLocation = document.getElementById("location");
+let todayTemp = document.getElementById("today-temp");
+let todayConditionImg = document.getElementById("today-condition-img");
+let todayConditionText = document.getElementById("today-condition-text");
+let humidity = document.getElementById("humidity");
+let wind = document.getElementById("wind");
+let windDirection = document.getElementById("wind-direction");
 
-var submitBtn = document.querySelector(".submit-button");
-var visitBtn = document.querySelector(".visit-button");
-var deleteBtn = document.querySelector(".delete-button");
-var closeBtn = document.querySelector(".close-button");
+//* Next Day
+let nextDayName = document.getElementsByClassName("next-day-name");
+let nextDayConditionImg = document.getElementsByClassName("next-day-condition-img");
+let nextDayMaxTemp = document.getElementsByClassName("next-day-max-temp");
+let nextDayMinTemp = document.getElementsByClassName("next-day-min-temp");
+let nextDayConditionText = document.getElementsByClassName("next-day-condition-text");
 
-var alert = document.querySelector(".alert-section");
+//* Find Location
+let searchInput = document.getElementById("search");
 
-var bookmarkList = [];
+//* Fetch API Data
+async function getData(city) {
+    let weatherResponse = await fetch(`http://api.weatherapi.com/v1/forecast.json?key=dc360ad706d34396806131358241912&q=${city}&days=3`);
+    let weatherData = await weatherResponse.json();
 
-var regex = {
-    bookmarkName: {
-        val: /^[\sa-zA-Z0-9_-]{3,}$/,
-        isValid: false
-    },
-    bookmarkUrl: {
-        val: /[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
-        isValid: false
+    return weatherData  
+}
+
+//* Display Today Data
+function displayToday(data) {
+    let todayDate = new Date();
+    todayName.innerHTML = todayDate.toLocaleDateString("en-US",{weekday:"long"});
+    monthDay.innerHTML = todayDate.getDate();
+    monthName.innerHTML = todayDate.toLocaleDateString("en-US",{month:"long"});
+    todayLocation.innerHTML = data.location.name;
+    todayTemp.innerHTML = data.current.temp_c;
+    todayConditionImg.setAttribute("src",data.current.condition.icon);
+    todayConditionText.innerHTML = data.current.condition.text;
+    humidity.innerHTML = data.current.humidity + "%";
+    wind.innerHTML = data.current.wind_kph + "km/h";
+    windDirection.innerHTML = data.current.wind_dir;
+}
+
+//* Display Next Day Data
+function displayNextDays(nextData) {
+    let nextDaysData = nextData.forecast.forecastday;
+    for (let i = 0; i < 2; i++) {
+        let nextDate = new Date(nextDaysData[i+1].date);
+        nextDayName[i].innerHTML = nextDate.toLocaleDateString("en-US",{weekday:"long"});
+        nextDayMaxTemp[i].innerHTML = nextDaysData[i+1].day.maxtemp_c;
+        nextDayMinTemp[i].innerHTML = nextDaysData[i+1].day.mintemp_c;
+        nextDayConditionImg[i].setAttribute("src",nextDaysData[i+1].day.condition.icon);
+        nextDayConditionText[i].setAttribute("src",nextDaysData[i+1].day.condition.text);
     }
 }
 
-if (localStorage.getItem("bookmarkList") != null) {
-    bookmarkList = JSON.parse(localStorage.getItem("bookmarkList"));
-    displayTable();
-}
-
-submitBtn.addEventListener("click", function () {
-    if(regex.bookmarkName.isValid && regex.bookmarkUrl.isValid){
-        alert.classList.add("d-none");
-        alert.classList.remove("d-block");
-        addBookmark();
-    }
-    else {
-        alert.classList.add("d-block");
-        alert.classList.remove("d-none");
-    }
-})
-
-closeBtn.addEventListener("click", function () {
-    alert.classList.add("d-none");
-    alert.classList.remove("d-block");
-})
-
-function addBookmark () {
-    var bookmark = {
-        name: bookmarkName.value,
-        url: bookmarkUrl.value
-    };
-
-    bookmarkList.push(bookmark);
-
-    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
-
-    clearInputs();
-
-    displayTable();
-}
-
-function displayTable () {
-    var cartona= ``;
-
-    for (var i = 0; i < bookmarkList.length; i++) {
-        cartona+=`<tr>
-                        <td>${i+1}</td>
-                        <td>${bookmarkList[i].name}</td>
-                        <td><button onclick="visitSite(${i})" class="btn visit-button"><i class="fa-solid fa-eye pe-2"></i>Visit</button></td>
-                        <td><button onclick="deleteRow(${i})" class="btn pe-2 delete-button"><i class="fa-solid fa-trash-can"></i> Delete</button></td>
-                    </tr>`;
-    }
-
-    document.querySelector(".table-body").innerHTML = cartona;
-}
-
-function clearInputs () {
-    bookmarkName.value = "";
-    bookmarkUrl.value = "";
-}
-
-function deleteRow (index) {
-    bookmarkList.splice(index,1);
-    localStorage.setItem("bookmarkList", JSON.stringify(bookmarkList));
-    displayTable();
-}
-
-function visitSite (index) {
-    window.open("https://" + bookmarkList[index].url);
-}
-
-function validateInputs (element) {  
-
-    if(regex[element.id].val.test(element.value)){
-        element.classList.add("is-valid");
-        element.classList.remove("is-invalid");
-        regex[element.id].isValid = true;
-    }
-    else {
-        element.classList.add("is-invalid");
-        element.classList.remove("is-valid");
-        regex[element.id].isValid = false;
+//* Start App
+async function startApp(input="cairo") {
+    let allWeatherData = await getData(input);
+    if(!allWeatherData.error) {
+        displayToday(allWeatherData);
+        displayNextDays(allWeatherData);
     }
 }
+
+startApp();
+
+searchInput.addEventListener("input", function(){
+    startApp(searchInput.value);
+});

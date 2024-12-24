@@ -3,169 +3,179 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    scroll-behavior: smooth;
 }
 
 body {
-    background-color: #F7ECDE;
+    color: #bfc1c8;
+    font-family: "Roboto", serif;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    background: #1e202b;
 }
 
-h1, h2, label, input, th, td, p, li {
-    &::selection {
-        background-color: #fec260;
-    }
+a {
+    text-decoration: none;
 }
-main {
-    min-height: 100vh;
-    .container {
-        h1 {
-            color: #352E28;
-            font-family: Pacifico;
-            font-size: 50px;
-            line-height: 60px;
-            position: relative;
-            width: fit-content;
-            &::before {
-                content: "";
-                position: absolute;
-                width: 100%;
-                height: 25%;
-                left: 0;
-                bottom: 10px;
-                background-color: #fec260;
-                transition: height 350ms;
-                z-index: -1;
+
+/*^ ===========> Navbar <=========== */
+.navbar {
+    padding-block: 50px;
+    .container-fluid {
+        .navbar-brand {    
+            .logo-img {
+                width: 64px;
+                height: 38px;
+                margin-right: 10px;
             }
-            &:hover::before {
-                height: 50%;
+            .logo-text {
+                .weather-title {
+                    font-weight: 700;
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                .weather-text {
+                    color: #bfc1c8;
+                    font-size: 10px;
+                    line-height: 15px;
+                }
             }
         }
-        .bookmark-section {
-            border-top: 2px #352e28 dotted;
-            border-bottom: 2px #352e28 dotted;
-            h2 {
-                font-family: Righteous;
-                font-size: 25px;
-                line-height: 30px;
-                margin-bottom: 8px;
-                color: transparent;
-                background-image: linear-gradient(to right, #3ca55c, #b5ac49);
-                background-clip: text;
-            }
-            .site-name , .site-url {
-                label {
-                    color: #212529;
-                    font-family: PTSansCaption-Bold;
-                    font-size: 16px;
-                    line-height: 24px;
+        .navbar-toggler {
+            box-shadow: unset;
+            span {
+                color: white;
+                border: 2px solid transparent;
+                border-radius: 40px;
+                padding: 20px;
+                transition: 0.3s ease;
+                &:hover {
+                    border-color: #009ad8;
+                    color: #009ad8;
                 }
-                input {
-                    &::placeholder{
-                        font-family: PTSansCaption-Regular;
+            }
+        }
+        .navbar-collapse {
+            .navbar-nav {
+                margin-top: 30px;
+                padding-top: 15px;
+                background: #262936;
+                border-radius: 10px;
+                .nav-link {
+                    color: white;
+                    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+                    &:last-child {
+                        border-bottom: none;
+                    }
+                }
+                .active-tab {
+                    color: #009ad8;
+                }
+            }
+        }
+    }
+}
+
+/*^ ===========> Header <=========== */
+.hero {
+    background-image: url('../Images/hero.png');
+    background-position: top left;
+    padding: 70px 0;
+    min-height: 350px;
+    .container {
+        .find-location {
+            position: relative;
+            input[type="text"] {
+                width: 100%;
+                padding: 20px 50px 20px 20px;
+                background: #1e202b;
+                color: white;
+                border-radius: 30px;
+                outline: 0;
+            }
+            input[type="button"] {
+                border: none;
+                background: #009ad8;
+                padding: 0px 40px;
+                border-radius: 30px;
+                color: white;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                bottom: 5px;
+            }
+        }
+    }
+}
+
+/*^ ===========> Forecast Table <=========== */
+.main-section {
+    .container {
+        .forecast-table {
+            width: 100%;
+            background: #323544;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-top: -150px;
+            margin-bottom: 50px;
+            .forecast-cell {
+                text-align: center;
+                &:nth-child(even) {
+                    background-color: #262936;
+                }
+                .cell-header {
+                    background: rgba(0, 0, 0, 0.1);
+                    padding: 10px;
+                    text-align: center;
+                    font-weight: 400;
+                    .date,.day {
+                        margin-bottom: unset;
+                    }
+                }
+                .cell-content {
+                    padding: 50px 20px 10px;
+                    .degree {
+                        .num {
+                            font-size: 24px;
+                            line-height: 36px;
+                            font-weight: 700;
+                            color: #FFF;
+                            text-align: center;
+                        }
+                    }
+                    small {
                         font-size: 16px;
                         line-height: 24px;
+                    }
+                    .custom {
+                        color: #009ad8;
+                        margin: 20px 0;
+                    }
+                }
+            }
+            .today {
+                .cell-content {
+                    text-align: left;
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                    #location {
+                        font-size: 18px;
                         font-weight: 400;
+                        line-height: 27px;
                     }
-                    &:focus {
-                        border-color: #d99c39;
-                        outline: 0;
-                        box-shadow: 0 0 0 0.25rem #fec26055;
-                    }
-                }
-            }
-            .submit-button {
-                padding: 6px 48px;
-                font-family: PTSansCaption-Regular;
-                color: #fff;
-                background-color: #d1512d;
-                width: fit-content;
-                &:hover {
-                    background-color: #bb4120;
-                    border-color: #a03315;
-                }
-            }
-        }
-        table {
-            --bs-body-bg: #F8F9FA;
-            th, td {
-                color: #212529;
-                font-family: PTSansCaption-Regular;
-                font-size: 16px;
-                line-height: 24px;
-                padding: 8px;
-            }
-            thead {
-                tr {
-                    th {
-                        font-weight: 700;
-                    }
-                }
-            }
-            .table-body {
-                tr {
-                    td {
-                        font-weight: 400;
-                        button {
-                            padding: 6px 12px;
-                            color: white;
-                        }
-                        .visit-button {
-                            background-color: #9eb23b;
-                            &:hover {
-                                background-color: #8a9e23;
-                                border-color: #6e8018;
-                            }
-                        }
-                        .delete-button {
-                            background-color: #eb1d36;
-                            &:hover {
-                                background-color: #d30820;
-                                border-color: #ba081d;
-                            }
+                    .degree {
+                        .num {
+                            text-align: left;
+                            margin-right: 30px;
+                            font-size: 90px;
+                            line-height: 135px;
                         }
                     }
-                }
-            }
-        }
-    }
-    
-    .alert-section {
-        background-color: #0007;
-        .alert-content {
-            width: 500px;
-            z-index: 111;
-            header {
-                .three-circles {
                     span {
-                        width: 20px;
-                        height: 20px;
-                        &:nth-child(1) {
-                            background-color: #f15f5d;
+                        margin-right: 20px;
+                        .today-footer-icons {
+                            margin-right: 5px;
                         }
-                        &:nth-child(2) {
-                            background-color: #febe2e;
-                        }
-                        &:nth-child(3) {
-                            background-color: #4db748;
-                        }
-                    }
-                }
-            }
-            p {
-                font-family: BreeSerif;
-                font-size: 21px;
-                line-height: 27.3px;
-                color: #352E28;
-            }
-            ol {
-                li {
-                    color: #212529;
-                    font-family: PTSansCaption-Regular;
-                    font-size: 18px;
-                    line-height: 27px;
-                    padding-top: 10px;
-                    i {
-                        color: #bb4120;
                     }
                 }
             }
@@ -173,50 +183,81 @@ main {
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*! ===========> Fonts <=========== */
-/*& ===========> Righteous <=========== */
-@font-face {
-    font-family: Righteous;
-    src: url(../webfonts/Righteous-Regular.ttf) format('ttf'),
-         url(../webfonts/Righteous-Regular.woff2) format('woff2');
+/*^ ===========> Footer <=========== */
+footer {
+    background: #262936;
+    padding: 50px 0;
+    .container {
+        .subscribe {
+            margin-bottom: 30px;
+            position: relative;
+            input[type="email"] {
+                width: 100%;
+                padding: 20px 100px 20px 20px;
+                background: #1e202b;
+                color: white;
+                border-radius: 30px;
+                outline: 0;
+            }
+            input[type="button"] {
+                border: none;
+                background: #009ad8;
+                padding: 10px 20px;
+                border-radius: 30px;
+                color: white;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                bottom: 5px;
+            }
+        }
+        .social-icons {
+            a {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                display: inline-block;
+                background: #1e202b;
+                color: #009ad8;
+                text-align: center;
+                transition: 0.3s ease;
+                font-size: 20px;
+                line-height: 2;
+                &:hover {
+                    background-color: #009ad8;
+                    color: white;
+                }
+            }
+        }
+    }
 }
-/*& ===========> Pacifico <=========== */
-@font-face {
-    font-family: Pacifico;
-    src: url(../webfonts/Pacifico-Regular.ttf) format('ttf'),
-         url(../webfonts/Pacifico-Regular.woff2) format('woff2');
+
+@media screen and (min-width: 992px) {
+/*^ ===========> Navbar Section Start <=========== */
+.navbar {
+    .container-lg {
+        .navbar-collapse {
+            .navbar-nav {
+                background-color: transparent;
+                .nav-link {
+                    padding: 5px 25px;
+                    border: 2px solid transparent;
+                    border-radius: 30px;
+                    transition: 0.3s ease;
+                    font-weight: 400;
+                    &:last-child {
+                        border-bottom: 2px solid transparent;
+                    }
+                    &:hover {
+                        border-color: #009ad8;
+                        color: #009ad8;
+                    }
+                }
+                .active-tab {
+                    border-color: #009ad8;
+                }
+            }
+        }
+    }
 }
-/*& ===========> PTSansCaption-Regular <=========== */
-@font-face {
-    font-family: PTSansCaption-Regular;
-    src: url(../webfonts/PTSansCaption-Regular.ttf) format('ttf'),
-         url(../webfonts/PTSansCaption-Regular.woff2) format('woff2');
-}
-/*& ===========> PTSansCaption-Bold <=========== */
-@font-face {
-    font-family: PTSansCaption-Bold;
-    src: url(../webfonts/PTSansCaption-Bold.ttf) format('ttf'),
-         url(../webfonts/PTSansCaption-Bold.woff2) format('woff2');
-}
-/*& ===========> BreeSerif <=========== */
-@font-face {
-    font-family: BreeSerif;
-    src: url(../webfonts/BreeSerif-Regular.ttf) format('ttf'),
-         url(../webfonts/BreeSerif-Regular.woff2) format('woff2');
 }

@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bookmark</title>
+    <title>Weather</title>
 
-    <!--* ===========> Website Icon <=========== -->
-    <link type="image/png" rel="icon" href="./Images/bookmark-icon.png" />
+    <!--* ===========> Roboto Font <=========== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <!--* ===========> Font Awesome Icons <=========== -->
     <link rel="stylesheet" href="./CSS/all.min.css" />
@@ -19,56 +21,128 @@
 </head>
 <body>
 
-    <main class="py-5 position-relative">
-        <section class="container d-flex flex-column justify-content-center align-items-center">
-            <h1 class="py-2 mb-2">Bookmarker</h1>
-            <div class="bookmark-section w-100 p-3 py-4 mt-5 d-flex flex-column gap-4">
-                <h2 class="text-center">
-                    <i class="fa-solid fa-bookmark"></i>
-                    Bookmark your favorite sites
-                    <i class="fa-solid fa-bookmark"></i>
-                </h2>
-                <div class="site-name">
-                    <label for="bookmark-name" class="d-block pb-2 fw-semibold text-start"><i class="fa-solid fa-book-bookmark pe-2"></i> Site Name</label>
-                    <input oninput="validateInputs(this)" type="text" name="bookmark-name" id="bookmarkName" placeholder="Bookmark Name" class="form-control">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid container-lg mt-lg-0">
+            <a class="navbar-brand d-flex justify-content-center align-items-center" href="#">
+                <img class="logo-img" src="./Images/logo.png" alt="Logo">
+                <div class="logo-text">
+                    <span class="weather-title d-block text-white">Weather</span>
+                    <span class="weather-text d-block">tagline goes here</span>
                 </div>
-                <div class="site-url">
-                    <label for="bookmark-url" class="d-block pb-2 fw-semibold text-start"><i class="fa-solid fa-link pe-2"></i>Site URL</label>
-                    <input oninput="validateInputs(this)" type="text" name="bookmark-url" id="bookmarkUrl" placeholder="Website URL" class="form-control">
-                </div>
-                <button class="btn m-auto submit-button">Submit</button>
+            </a>
+            <button class="navbar-toggler ms-auto border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fa-solid fa-bars"></i></span>
+            </button>
+            <div class="collapse navbar-collapse text-center align-top" id="navbarNavAltMarkup">
+                <ul class="navbar-nav ms-lg-auto gap-lg-3 gap-4 mt-lg-0 pt-lg-0">
+                    <a class="nav-link active-tab" href="#" aria-current="page">Home</a>
+                    <a class="nav-link" href="#">News</a>
+                    <a class="nav-link" href="#">Live cameras</a>
+                    <a class="nav-link" href="#">Photos</a>
+                    <a class="nav-link" href="#">Contact</a>
+                </ul>
             </div>
-            <table class="table mt-4 text-center align-middle">
-                <thead class="fw-light">
-                    <tr>
-                        <th class="text-capitalize">index</th>
-                        <th class="text-capitalize">website name</th>
-                        <th class="text-capitalize">visit</th>
-                        <th class="text-capitalize">delete</th>
-                    </tr>
-                </thead>
-                <tbody class="table-body">
-                </tbody>
-            </table>
-        </section>
-        <section class="alert-section position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center d-none">
-            <div class="alert-content bg-white p-4 rounded-2 shadow-lg">
-                <header class="w-100 mb-4 d-flex justify-content-between align-items-center">
-                    <div class="three-circles d-flex">
-                        <span class="d-block rounded-circle me-2"></span>
-                        <span class="d-block rounded-circle me-2"></span>
-                        <span class="d-block rounded-circle me-2"></span>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <form class="find-location">
+                <input class="border-0" type="text" name="search" id="search" placeholder="Find your location...">
+                <input type="button" value="Find" id="find">
+            </form>
+        </div>
+    </header>
+
+    <div class="main-section">
+        <div class="container">
+            <div class="row forecast-table d-flex flex-wrap justify-content-between" id="forecast">
+                <div class="col-12 col-lg-4 p-0 forecast-cell today">
+                    <div class="cell-header d-flex justify-content-between" id="today-header">
+                        <p id="today-name" class="day">Saturday</p>
+                        <p class="date">
+                            <span id="month-day">21</span><span id="month-name">December</span>
+                        </p>
                     </div>
-                    <button class="btn border-0 close-button"><i class="fa-solid fa-xmark fs-3"></i></button>
-                </header>
-                <p class="m-0 pb-2">Site Name or Url is not valid, Please follow the rules below :</p>
-                <ol class="list-unstyled m-0">
-                    <li><i class="fa-regular fa-circle-right p-2"></i>Site name must contain at least 3 characters</li>
-                    <li><i class="fa-regular fa-circle-right p-2"></i>Site URL must be a valid one</li>
-                </ol>
+                    <div class="cell-content">
+                        <p id="location">Cairo</p>
+                        <div class="degree d-flex flex-lg-column">
+                            <p class="num mb-0">
+                                <span id="today-temp" class="me-0">19.9</span><sup>o</sup>C
+                            </p>
+                            <img id="today-condition-img" width="90" height="90" src="" alt="">
+                        </div>
+                        <p class="custom" id="today-condition-text">Sunny</p>
+                        <span>
+                            <img src="./Images/icon-umberella.png" alt="" class="today-footer-icons"><span id="humidity" class="m-0">20%</span>
+                        </span>
+                        <span>
+                            <img src="./Images/icon-wind.png" alt="" class="today-footer-icons"><span id="wind" class="m-0">18km/h</span>
+                        </span>
+                        <span>
+                            <img src="./Images/icon-compass.png" alt="" class="today-footer-icons"><span id="wind-direction" class="m-0">East</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 p-0 forecast-cell">
+                    <div class="cell-header">
+                        <p class="next-day-name day">Sunday</p>
+                    </div>
+                    <div class="cell-content">
+                        <div class="degree">
+                            <img class="next-day-condition-img" src="" alt="">
+                            <p class="num mb-0">
+                                <span class="next-day-max-temp">21</span><sup>o</sup>C
+                            </p>
+                        </div>
+                        <small>
+                            <span class="next-day-min-temp">13</span><sup>o</sup>
+                        </small>
+                        <p class="next-day-condition-text custom">Sunny</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4 p-0 forecast-cell">
+                    <div class="cell-header">
+                        <p class="next-day-name day">Monday</p>
+                    </div>
+                    <div class="cell-content">
+                        <div class="degree">
+                            <img class="next-day-condition-img" src="" alt="">
+                            <p class="num mb-0">
+                                <span class="next-day-max-temp">20.3</span><sup>o</sup>C
+                            </p>
+                        </div>
+                        <small>
+                            <span class="next-day-min-temp">13.2</span><sup>o</sup>
+                        </small>
+                        <p class="next-day-condition-text custom">Sunny</p>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-lg-8">
+                    <form class="subscribe">
+                        <input class="border-0" type="email" name="subscribe" id="subscribe" placeholder="Enter your email to subscribe...">
+                        <input type="button" value="Subscribe" id="subscribe-btn">
+                    </form>
+                </div>
+                <div class="col-12 col-lg-3 offset-lg-1">
+                    <div class="social-icons">
+                        <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#"><i class="fa-brands fa-google-plus-g"></i></a>
+                        <a href="#"><i class="fa-brands fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <p>Copyright 2014 Company name. Designed by Themezy. All rights reserved</p>
+        </div>
+    </footer>
 
     <!--* ===========> Bootstrap <=========== -->
     <script src="./JS/bootstrap.bundle.min.js"></script>
